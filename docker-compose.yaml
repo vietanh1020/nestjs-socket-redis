@@ -13,7 +13,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: eduplatform
       MYSQL_USER: abc
-      MYSQL_PASSWORD: root
+      MYSQL_PASSWORD: abc
     networks:
       - default
 
@@ -35,7 +35,6 @@ services:
 
   redis:
     image: redis:5-alpine
-    container_name: doodle_redis
     volumes:
       - ./docker/redis:/data
     ports:
