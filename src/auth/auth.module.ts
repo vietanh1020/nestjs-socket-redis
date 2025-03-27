@@ -4,12 +4,10 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { KeycloakService } from './keycloak.service';
-import { KeycloakConfigService } from './keycloak.config';
-import { KeycloakController } from './keycloak.controller';
-import { KeycloakGuard } from './keycloak.guard';
+
 import { RolesGuard } from './roles.guard';
 import { ProtectedController } from './protected.controller';
+import { KeycloakModule } from 'src/keycloak/keycloak.module';
 
 @Module({
   imports: [
@@ -22,21 +20,16 @@ import { ProtectedController } from './protected.controller';
       }),
       inject: [ConfigService],
     }),
+    KeycloakModule
   ],
-  controllers: [AuthController, KeycloakController, ProtectedController],
+  controllers: [AuthController, ProtectedController],
   providers: [
     AuthService,
-    KeycloakService,
-    KeycloakConfigService,
-    KeycloakGuard,
     RolesGuard,
   ],
   exports: [
     AuthService,
-    KeycloakService,
-    KeycloakConfigService,
-    KeycloakGuard,
     RolesGuard,
   ],
 })
-export class AuthModule {}
+export class AuthModule { }

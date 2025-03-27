@@ -1,13 +1,21 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, Res } from '@nestjs/common';
 import { KeycloakService } from './keycloak.service';
+import { Response } from 'express';
 
 @Controller('keycloak')
 export class KeycloakController {
   constructor(private readonly keycloakService: KeycloakService) {}
 
   @Post('login')
-  async login(@Body() loginDto: { username: string; password: string }) {
-    return this.keycloakService.login(loginDto.username, loginDto.password);
+  async login(@Body() loginDto: { username: string; password: string }, @Res() res: Response) {
+    const result = await this.keycloakService.login(loginDto.username, loginDto.password);
+    
+    if (result.success) {
+      // Redirect to frontend with token
+      return res.redirect(`${result.redirect_uri}?token=${result.access_token}`);
+    }
+    
+    return res.status(401).json(result);
   }
 
   @Post('users')
@@ -51,10 +59,6 @@ export class KeycloakController {
   async getUserById(@Param('userId') userId: string) {
     return this.keycloakService.getUserById(userId);
   }
-
-
-
-
 
   @Get('roles')
   async getAllRoles() {

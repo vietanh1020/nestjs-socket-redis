@@ -1,8 +1,8 @@
 import { Injectable, CanActivate, ExecutionContext, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './roles.decorator';
-import { KeycloakConfigService } from './keycloak.config';
 import * as jwt from 'jsonwebtoken';
+import { KeycloakConfigService } from 'src/keycloak/keycloak.config';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

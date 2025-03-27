@@ -29,6 +29,10 @@ export class KeycloakConfigService {
     return this.configService.get<string>('KEYCLOAK_ADMIN_PASSWORD') || 'admin';
   }
 
+  get redirectUri(): string {
+    return this.configService.get<string>('KEYCLOAK_REDIRECT_URI') || 'http://localhost:3000';
+  }
+
   get keycloakConfig() {
     return {
       realm: this.realm,
@@ -39,6 +43,7 @@ export class KeycloakConfigService {
       credentials: {
         secret: this.clientSecret,
       },
+      'redirect-uri': this.redirectUri,
     };
   }
 } 

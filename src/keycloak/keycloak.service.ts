@@ -152,11 +152,10 @@ export class KeycloakService implements OnApplicationBootstrap {
   }
 
   /**
-   * Lấy danh sách tất cả người dùng
+   * Lấy danh sách tất cả users
    */
   async getAllUsers() {
     try {
-      await this.authenticateAdmin();
       return await this.kcAdminClient.users.find();
     } catch (error) {
       this.logger.error(`Failed to get all users: ${error.message}`);
@@ -195,6 +194,7 @@ export class KeycloakService implements OnApplicationBootstrap {
             grant_type: 'password',
             username,
             password,
+            redirect_uri: this.keycloakConfigService.redirectUri,
           }).toString(),
         },
       );
@@ -210,6 +210,7 @@ export class KeycloakService implements OnApplicationBootstrap {
         access_token: tokenData.access_token,
         refresh_token: tokenData.refresh_token,
         expires_in: tokenData.expires_in,
+        redirect_uri: this.keycloakConfigService.redirectUri,
       };
     } catch (error) {
       this.logger.error(`Login failed: ${error.message}`);

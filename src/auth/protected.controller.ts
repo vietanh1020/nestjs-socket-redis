@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { KeycloakGuard } from './keycloak.guard';
 import { Roles } from './roles.decorator';
 import { RolesGuard } from './roles.guard';
+import { KeycloakGuard } from 'src/keycloak/keycloak.guard';
 
 @Controller('protected')
 @UseGuards(KeycloakGuard)
