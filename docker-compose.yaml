@@ -24,7 +24,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: mysql
+    container_name: mysql_keycloak
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root_password
@@ -40,6 +40,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
+    container_name: phpmyadmin_keycloak
     restart: always
     ports:
       - 8081:80
@@ -56,6 +57,7 @@ services:
   
   redis:
     image: redis:5-alpine
+    container_name: redis_keycloak
     volumes:
       - ./docker/redis:/data
     ports:
